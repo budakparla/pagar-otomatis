@@ -1,13 +1,17 @@
 import colors from 'vuetify/es5/util/colors'
 
 export default {
+  server: {
+    port: 8000, // default: 3000     
+    host: '0.0.0.0', // default: localhost   
+  },
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - pagar-otomatis',
-    title: 'pagar-otomatis',
+    titleTemplate: '%s - Pagar Otomatis',
+    title: 'Pagar IoT',
     htmlAttrs: {
       lang: 'en'
     },
@@ -41,6 +45,31 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: "AIzaSyAMhURl4BpCfolzy53BaIfqBYE999An6Ls",
+          authDomain: "pagar-otomatis-fc5f1.firebaseapp.com",
+          databaseURL: "https://pagar-otomatis-fc5f1-default-rtdb.asia-southeast1.firebasedatabase.app/",
+          projectId: "pagar-otomatis-fc5f1",
+          storageBucket: "pagar-otomatis-fc5f1.appspot.com",
+          messagingSenderId: "184441940047",
+          appId: "1:184441940047:web:b7538329e7ec90f06ca23a"
+        },
+        services: {
+          auth: true, // Just as example. Can be any other service.
+          database: true
+        },
+        database: {
+          emulatorPort: 9000,
+          emulatorHost: 'localhost',
+        },
+      },
+    ],
+    [
+      '@nuxtjs/pwa',
+    ]
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -64,5 +93,18 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  pwa: {
+    manifest: {
+      name: 'Pagar Otomatis',
+      short_name: 'Pagar Otomatis',
+      description: 'Aplikasi untuk membuka pagar berbasis Internet of Things',
+      lang: 'en-US',
+      display: 'standalone',
+      start_url: '/static',
+      theme_color: '#1976d2',
+      background_color: '#FFFFFF',
+    }
   }
 }

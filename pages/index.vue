@@ -21,16 +21,23 @@
               <v-list-item-title class="text-center"
                 >Status Pagar</v-list-item-title
               >
-              <v-list-item-subtitle class="text-center"
-                >Tertutup</v-list-item-subtitle
-              >
+              <v-list-item-subtitle class="text-center">{{
+                db.statusPagar
+              }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-card-title>
         <v-card-text>
-          <v-list v-for="text in tombol" :key="text">
+          <v-list>
             <v-list-item class="d-flex justify-center">
-              <v-btn depressed color="primary">{{ text }}</v-btn>
+              <v-btn @click="funcBukaPagar()" depressed color="primary">
+                Buka Pagar
+              </v-btn>
+            </v-list-item>
+            <v-list-item class="d-flex justify-center">
+              <v-btn @click="funcTutupPagar()" depressed color="primary">
+                Tutup Pagar
+              </v-btn>
             </v-list-item>
           </v-list>
         </v-card-text>
@@ -42,7 +49,7 @@
 
 <style>
 .app-logo {
-  width: 60%;
+  width: 45%;
   align-items: center;
 }
 </style>
@@ -51,8 +58,66 @@
 export default {
   data() {
     return {
-      tombol: ["Buka Pagar", "Tutup Pagar"],
+      bukaPagar: false,
+      statusPagar: 0,
+      tutupPagar: false,
+      db: {
+        bukaPagar: false,
+        statusPagar: 0,
+        tutupPagar: false,
+      },
     };
+  },
+
+  mounted() {
+    // program di dalam mounted dijalankan pertama saat load web
+    this.fetchDb();
+  },
+  watch: {
+    // memantau perubahan value dari relay
+    bukaPagar(val) {
+      this.refBukaPagar.set(val);
+    },
+    statusPagar(val) {
+      this.refStatusPagar.set(val);
+    },
+    tutupPagar(val) {
+      this.refTutupPagar.set(val);
+    },
+  },
+  computed: {
+    refBukaPagar() {
+      return this.$fire.database.ref().ref.child("buka-pagar");
+    },
+    refStatusPagar() {
+      return this.$fire.database.ref().ref.child("status-pagar");
+    },
+    refTutupPagar() {
+      return this.$fire.database.ref().ref.child("tutup-pagar");
+    },
+  },
+  methods: {
+    fetchDb() {
+      this.refBukaPagar.on("value", (dataSnapshot) => {
+        this.db.bukaPagar = dataSnapshot.val();
+      }),
+        this.refStatusPagar.on("value", (dataSnapshot) => {
+          this.db.statusPagar = dataSnapshot.val();
+        }),
+        this.refTutupPagar.on("value", (dataSnapshot) => {
+          this.db.tutupPagar = dataSnapshot.val();
+        });
+    },
+    funcBukaPagar: function () {
+      this.bukaPagar = true;
+      this.tutupPagar = false;
+      this.statusPagar = this.bukaPagar ? "Pagar terbuka" : "Pagar tertutup";
+    },
+    funcTutupPagar: function () {
+      this.tutupPagar = true;
+      this.bukaPagar = false;
+      this.statusPagar = this.tutupPagar ? "Pagar tertutup" : "Pagar terbuka";
+    },
   },
 };
 </script>
