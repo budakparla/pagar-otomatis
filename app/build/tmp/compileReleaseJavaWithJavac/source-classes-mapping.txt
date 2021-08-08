@@ -1,0 +1,8 @@
+app/vercel/pagar_otomatis/twa/BuildConfig.java
+ app.vercel.pagar_otomatis.twa.BuildConfig
+app/vercel/pagar_otomatis/twa/LauncherActivity.java
+ app.vercel.pagar_otomatis.twa.LauncherActivity
+app/vercel/pagar_otomatis/twa/DelegationService.java
+ app.vercel.pagar_otomatis.twa.DelegationService
+app/vercel/pagar_otomatis/twa/Application.java
+ app.vercel.pagar_otomatis.twa.Application

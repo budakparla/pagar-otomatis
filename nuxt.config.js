@@ -66,6 +66,26 @@ export default {
         },
       },
     ],
+    ['nuxt-twa-module', {
+      /* module options */
+      defaultUrl: 'https://your-url.com',
+      hostName: 'your-url.com',
+      applicationId: 'com.example.example',
+      launcherName: 'Your app name',
+      versionCode: 1,
+      versionName: '1.0',
+      statusBarColor: '#1976d2',
+      // The sha256Fingerprints by is an array with one SHA-256 key string.
+      // But if you have multiple you can add them to the array. More information about the website asociation:
+      // https://developer.android.com/training/app-links/verify-site-associations#web-assoc
+      sha256Fingerprints: ['/* your SHA-256 keys */'],
+      /* optional */
+      /* overwrite default location for icon */
+      iconPath: '/static/icon.png',
+      /* Overwrite folder where to put .wellknown */
+      distFolder: '.nuxt/dist/client',
+    }
+    ],
     [
       '@nuxtjs/pwa',
       '@nuxtjs/imagemin',
