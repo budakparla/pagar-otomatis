@@ -39,7 +39,6 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
 
@@ -69,7 +68,8 @@ export default {
     ],
     [
       '@nuxtjs/pwa',
-    ]
+      '@nuxtjs/imagemin',
+    ],
   ],
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -93,6 +93,7 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    analyze: true,
   },
 
   pwa: {
@@ -106,5 +107,14 @@ export default {
       theme_color: '#1976d2',
       background_color: '#FFFFFF',
     }
+  },
+
+  imagemin: {
+    enableInDev: true,
+    minimizerOptions: {
+      plugins: [
+        'mozjpeg', { quality: 50, progressive: true }
+      ],
+    },
   }
 }

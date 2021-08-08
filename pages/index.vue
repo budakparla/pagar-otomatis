@@ -7,12 +7,13 @@
       </v-alert>
       <v-card class="logo py-4 d-flex justify-center">
         <img
+          loading="lazy"
+          width="45%"
+          height="45%"
           class="app-logo"
           src="../assets/Logo.jpg"
           alt="Logo Aplikasi Pagar Otomatis"
         />
-        <!-- <NuxtLogo />
-        <VuetifyLogo /> -->
       </v-card>
       <v-card class="d-flex justify-center flex-column">
         <v-card-title class="headline">
@@ -49,13 +50,19 @@
 
 <style>
 .app-logo {
-  width: 45%;
   align-items: center;
 }
 </style>
 
 <script>
+// import { VAlert, VCard, VCardText, VCardTitle } from "vuetify/lib";
+
 export default {
+  // components: {
+  //   VCard,
+  //   VCardText,
+  //   VCardTitle,
+  // },
   data() {
     return {
       bukaPagar: false,
