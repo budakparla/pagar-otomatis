@@ -31,12 +31,12 @@
         <v-card-text>
           <v-list>
             <v-list-item class="d-flex justify-center">
-              <v-btn @click="funcBukaPagar()" depressed color="primary">
+              <v-btn @click="funcBukaPagar()" :disabled="db.bukaPagar == true" depressed color="primary">
                 Buka Pagar
               </v-btn>
             </v-list-item>
             <v-list-item class="d-flex justify-center">
-              <v-btn @click="funcTutupPagar()" depressed color="primary">
+              <v-btn @click="funcTutupPagar()" :disabled="db.tutupPagar == true" depressed color="primary">
                 Tutup Pagar
               </v-btn>
             </v-list-item>
@@ -55,22 +55,13 @@
 </style>
 
 <script>
-// import { VAlert, VCard, VCardText, VCardTitle } from "vuetify/lib";
 
 export default {
-  // components: {
-  //   VCard,
-  //   VCardText,
-  //   VCardTitle,
-  // },
   data() {
     return {
-      bukaPagar: false,
-      statusPagar: 0,
-      tutupPagar: false,
       db: {
-        bukaPagar: false,
-        statusPagar: 0,
+        bukaPagar: true,
+        statusPagar: "",
         tutupPagar: false,
       },
     };
@@ -81,14 +72,14 @@ export default {
     this.fetchDb();
   },
   watch: {
-    // memantau perubahan value dari relay
-    bukaPagar(val) {
+    // memantau perubahan value
+    'db.bukaPagar'(val) {
       this.refBukaPagar.set(val);
     },
-    statusPagar(val) {
+    'db.statusPagar'(val) {
       this.refStatusPagar.set(val);
     },
-    tutupPagar(val) {
+    'db.tutupPagar'(val) {
       this.refTutupPagar.set(val);
     },
   },
@@ -107,23 +98,23 @@ export default {
     fetchDb() {
       this.refBukaPagar.on("value", (dataSnapshot) => {
         this.db.bukaPagar = dataSnapshot.val();
-      }),
-        this.refStatusPagar.on("value", (dataSnapshot) => {
-          this.db.statusPagar = dataSnapshot.val();
-        }),
-        this.refTutupPagar.on("value", (dataSnapshot) => {
-          this.db.tutupPagar = dataSnapshot.val();
-        });
+      });
+      this.refStatusPagar.on("value", (dataSnapshot) => {
+        this.db.statusPagar = dataSnapshot.val();
+      });
+      this.refTutupPagar.on("value", (dataSnapshot) => {
+        this.db.tutupPagar = dataSnapshot.val();
+      });
     },
     funcBukaPagar: function () {
-      this.bukaPagar = true;
-      this.tutupPagar = false;
-      this.statusPagar = this.bukaPagar ? "Pagar terbuka" : "Pagar tertutup";
+      this.db.bukaPagar = true;
+      this.db.tutupPagar = false;
+      this.db.statusPagar = this.db.bukaPagar ? "Pagar terbuka" : "Pagar tertutup";
     },
     funcTutupPagar: function () {
-      this.tutupPagar = true;
-      this.bukaPagar = false;
-      this.statusPagar = this.tutupPagar ? "Pagar tertutup" : "Pagar terbuka";
+      this.db.bukaPagar = false;
+      this.db.tutupPagar = true;
+      this.db.statusPagar = this.db.tutupPagar ? "Pagar tertutup" : "Pagar terbuka";
     },
   },
 };
